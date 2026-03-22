@@ -1,0 +1,5 @@
+1001,Ana Torres,Ingenieria de Sistemas
+1002,Luis Gomez,Ciencias de la Computacion
+1003,Maria Rios,Ciencia de Datos
+1004,Carlos Perez,Ingenieria de Software
+1005,Sofia Mendez,Sistemas de Informacion
