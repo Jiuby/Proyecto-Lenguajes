@@ -1,0 +1,5 @@
+student(1001,juan,480,540,out).
+student(1002,maria,600,0,in).
+student(1003,pedro,510,585,out).
+student(2001,samir,914,914,out).
+student(67,velez,938,0,in).
