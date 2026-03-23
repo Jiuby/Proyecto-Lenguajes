@@ -1,7 +1,7 @@
 -- ================================================================
--- MÓDULO: Utilidades.hs
+-- MODULO: Utilidades.hs
 -- ================================================================
--- Funciones auxiliares pequeñas que se reutilizan en varios módulos:
+-- Funciones auxiliares pequenas que se reutilizan en varios modulos:
 --   - Separar texto por un caracter
 --   - Convertir horas a minutos y viceversa
 --   - Pedir la hora al usuario
@@ -24,9 +24,9 @@ import Tipos   -- necesitamos el tipo Registro para 'estaAdentro'
 --   splitOn ',' ""                   =>  [""]
 --
 -- Funciona con 'foldr': recorre el texto de derecha a izquierda.
--- Cada vez que encuentra el separador, abre una nueva parte vacía.
+-- Cada vez que encuentra el separador, abre una nueva parte vacia.
 splitOn :: Char -> String -> [String]
-splitOn _ "" = [""]   -- caso base: texto vacío => una sola parte vacía
+splitOn _ "" = [""]   -- caso base: texto vacio => una sola parte vacia
 splitOn sep texto = foldr paso [""] texto
   where
     -- 'paso' se ejecuta para cada caracter del texto
@@ -40,7 +40,7 @@ splitOn sep texto = foldr paso [""] texto
 -- horaAMinutos
 -- ----------------------------------------------------------------
 -- Convierte una hora en formato "HH:MM" a minutos desde las 00:00.
--- Esto hace que restar horas sea tan simple como restar dos números.
+-- Esto hace que restar horas sea tan simple como restar dos numeros.
 --
 -- Ejemplo:
 --   horaAMinutos "02:30"  =>  150   (2*60 + 30)
@@ -56,18 +56,18 @@ horaAMinutos hora =
 -- minutosAHora
 -- ----------------------------------------------------------------
 -- Convierte minutos a formato "HH:MM".
--- Es la operación inversa de horaAMinutos.
+-- Es la operacion inversa de horaAMinutos.
 --
 -- Ejemplo:
 --   minutosAHora 150  =>  "02:30"
 --   minutosAHora 480  =>  "08:00"
 minutosAHora :: Int -> String
 minutosAHora total =
-    let horas   = total `div` 60   -- división entera
+    let horas   = total `div` 60   -- division entera
         minutos = total `mod` 60   -- residuo
     in  rellenar horas ++ ":" ++ rellenar minutos
   where
-    -- Agrega un '0' adelante si el número es de un solo dígito
+    -- Agrega un '0' adelante si el numero es de un solo digito
     -- Ejemplo: 5 => "05",  12 => "12"
     rellenar n = if n < 10 then "0" ++ show n else show n
 
@@ -75,8 +75,8 @@ minutosAHora total =
 -- ----------------------------------------------------------------
 -- pedirHora
 -- ----------------------------------------------------------------
--- Acción IO que le pide al usuario que escriba la hora actual.
--- Devuelve el String que el usuario ingresó.
+-- Accion IO que le pide al usuario que escriba la hora actual.
+-- Devuelve el String que el usuario ingreso.
 pedirHora :: IO String
 pedirHora = do
     putStr "Ingresa la hora actual (HH:MM): "
@@ -87,7 +87,7 @@ pedirHora = do
 -- estaAdentro
 -- ----------------------------------------------------------------
 -- Dice si un Registro corresponde a un estudiante que
--- todavía no ha registrado salida.
+-- todavia no ha registrado salida.
 --
 -- Usa pattern matching sobre Maybe:
 --   Nothing => no tiene hora de salida => sigue adentro => True

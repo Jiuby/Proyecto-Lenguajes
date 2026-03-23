@@ -1,16 +1,16 @@
 -- ================================================================
--- MÓDULO: Main.hs
+-- MODULO: Main.hs
 -- ================================================================
 -- Punto de entrada del programa.
--- Solo se encarga del menú y del bucle principal.
--- Toda la lógica está en los otros módulos.
+-- Solo se encarga del menu y del bucle principal.
+-- Toda la logica esta en los otros modulos.
 --
 -- Estructura del proyecto:
 --   Tipos.hs        => tipos de datos (Estudiante, Registro)
---   Utilidades.hs   => funciones pequeñas reutilizables
+--   Utilidades.hs   => funciones pequenas reutilizables
 --   Archivos.hs     => leer y escribir archivos
 --   Operaciones.hs  => las 5 funciones del sistema
---   Main.hs         => menú y punto de entrada  (este archivo)
+--   Main.hs         => menu y punto de entrada  (este archivo)
 -- ================================================================
 
 module Main where
@@ -36,21 +36,21 @@ mostrarMenu = do
     putStrLn "4. Listar estudiantes del archivo"
     putStrLn "5. Registrar salida"
     putStrLn "6. Salir"
-    putStr   "Elige una opción: "
+    putStr   "Elige una opcion: "
 
 
 -- ----------------------------------------------------------------
 -- bucle
 -- ----------------------------------------------------------------
--- Bucle principal del programa. Usa RECURSIÓN en lugar de while/for.
+-- Bucle principal del programa. Usa RECURSION en lugar de while/for.
 --
 -- En Haskell no existen variables mutables ni ciclos tradicionales.
--- En su lugar, 'bucle' se llama a sí misma pasando la lista
+-- En su lugar, 'bucle' se llama a si misma pasando la lista
 -- actualizada como argumento. El estado del programa vive
 -- en ese argumento que va pasando de llamada en llamada.
 --
 -- Ejemplo de flujo:
---   bucle []                    -- inicia con lista vacía
+--   bucle []                    -- inicia con lista vacia
 --     => usuario elige "1"
 --     => registrarEntrada [] devuelve [registro1]
 --   bucle [registro1]           -- nueva llamada con lista actualizada
@@ -59,7 +59,7 @@ mostrarMenu = do
 --   bucle [registro1, registro2]
 --     => usuario elige "6"      -- fin, no hay llamada recursiva
 --
--- La recursión termina cuando el usuario elige "6".
+-- La recursion termina cuando el usuario elige "6".
 bucle :: [Registro] -> IO ()
 bucle registros = do
     mostrarMenu
@@ -94,18 +94,18 @@ bucle registros = do
 
         "6" ->
             -- No hacemos llamada recursiva => el programa termina
-            putStrLn "¡Hasta luego!"
+            putStrLn "Hasta luego!"
 
         _ -> do
-            -- Cualquier otra entrada es inválida
-            putStrLn "✗ Opción inválida. Intenta de nuevo."
-            bucle registros   -- volvemos a mostrar el menú
+            -- Cualquier otra entrada es invalida
+            putStrLn "[X] Opcion invalida. Intenta de nuevo."
+            bucle registros   -- volvemos a mostrar el menu
 
 
 -- ----------------------------------------------------------------
 -- main
 -- ----------------------------------------------------------------
--- Primera función que ejecuta Haskell al correr el programa.
+-- Primera funcion que ejecuta Haskell al correr el programa.
 -- Carga los registros existentes y arranca el bucle.
 main :: IO ()
 main = do
@@ -119,5 +119,5 @@ main = do
 
     putStrLn $ "Sistema listo. " ++ show (length registros) ++ " registro(s) cargado(s)."
 
-    -- Iniciamos el bucle con los registros que había guardados
+    -- Iniciamos el bucle con los registros que habia guardados
     bucle registros

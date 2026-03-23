@@ -1,5 +1,5 @@
 -- ================================================================
--- MÓDULO: Archivos.hs
+-- MODULO: Archivos.hs
 -- ================================================================
 -- Todo lo relacionado con leer y escribir archivos:
 --   - Cargar University.txt  => lista de Estudiantes
@@ -12,7 +12,7 @@ module Archivos where
 import Data.List   (intercalate)      -- para unir campos con comas
 import System.IO.Error (catchIOError) -- para no crashear si el archivo no existe
 import Tipos                          -- Estudiante, Registro
-import Utilidades  (splitOn)          -- para separar las líneas por ','
+import Utilidades  (splitOn)          -- para separar las lineas por ','
 
 
 -- ----------------------------------------------------------------
@@ -20,30 +20,30 @@ import Utilidades  (splitOn)          -- para separar las líneas por ','
 -- ----------------------------------------------------------------
 -- Lee University.txt y devuelve una lista de Estudiante.
 --
--- Formato esperado de cada línea:
+-- Formato esperado de cada linea:
 --   id,nombre,carrera
 -- Ejemplo:
---   1001,Ana Torres,Ingeniería de Sistemas
+--   1001,Ana Torres,Ingenieria de Sistemas
 --
 -- Pasos:
 --   1. readFile lee todo el archivo como un String
---   2. lines   divide el String en una lista de líneas
---   3. filter  elimina las líneas vacías
---   4. map     convierte cada línea en un Estudiante
+--   2. lines   divide el String en una lista de lineas
+--   3. filter  elimina las lineas vacias
+--   4. map     convierte cada linea en un Estudiante
 cargarEstudiantes :: FilePath -> IO [Estudiante]
 cargarEstudiantes archivo = do
     contenido <- readFile archivo
     let lineas = filter (not . null) (lines contenido)
     return (map parsearEstudiante lineas)
 
--- Convierte una línea de texto en un Estudiante.
+-- Convierte una linea de texto en un Estudiante.
 -- Usa pattern matching sobre la lista de partes separadas por ','.
 parsearEstudiante :: String -> Estudiante
 parsearEstudiante linea = case splitOn ',' linea of
-    (i:n:c:_) -> Estudiante i n c             -- línea completa
+    (i:n:c:_) -> Estudiante i n c             -- linea completa
     (i:n:_)   -> Estudiante i n "Desconocida" -- falta la carrera
     (i:_)     -> Estudiante i "?" "?"         -- solo tiene ID
-    []        -> Estudiante "?" "?" "?"       -- línea vacía
+    []        -> Estudiante "?" "?" "?"       -- linea vacia
 
 
 -- ----------------------------------------------------------------
@@ -51,19 +51,19 @@ parsearEstudiante linea = case splitOn ',' linea of
 -- ----------------------------------------------------------------
 -- Lee records.txt y devuelve una lista de Registro.
 --
--- Formato esperado de cada línea:
+-- Formato esperado de cada linea:
 --   id,nombre,carrera,entrada,salida
 -- Ejemplo con salida:    1001,Ana Torres,Sistemas,08:00,10:30
 -- Ejemplo sin salida:    1002,Luis Gomez,Sistemas,09:15,
---                                                       ^ vacío = sigue adentro
+--                                                       ^ vacio = sigue adentro
 cargarRegistros :: FilePath -> IO [Registro]
 cargarRegistros archivo = do
     contenido <- readFile archivo
     let lineas = filter (not . null) (lines contenido)
     return (map parsearRegistro lineas)
 
--- Convierte una línea de texto en un Registro.
--- Si el campo de salida está vacío (""), se guarda como Nothing.
+-- Convierte una linea de texto en un Registro.
+-- Si el campo de salida esta vacio (""), se guarda como Nothing.
 -- Si tiene un valor, se guarda como Just "HH:MM".
 parsearRegistro :: String -> Registro
 parsearRegistro linea = case splitOn ',' linea of
@@ -82,14 +82,14 @@ parsearRegistro linea = case splitOn ',' linea of
 -- Sobreescribe el archivo completo (no agrega al final).
 --
 -- Pasos:
---   1. Convierte cada Registro en una línea de texto
---   2. 'unlines' une la lista con saltos de línea al final
+--   1. Convierte cada Registro en una linea de texto
+--   2. 'unlines' une la lista con saltos de linea al final
 --   3. writeFile sobreescribe el archivo con ese texto
 guardarRegistros :: FilePath -> [Registro] -> IO ()
 guardarRegistros archivo registros =
     writeFile archivo (unlines (map registroALinea registros))
 
--- Convierte un Registro en una línea de texto para guardar.
+-- Convierte un Registro en una linea de texto para guardar.
 -- 'intercalate "," lista' une los elementos con comas.
 -- Ejemplo: ["1001","Ana","Sistemas","08:00",""]  =>  "1001,Ana,Sistemas,08:00,"
 registroALinea :: Registro -> String
@@ -99,7 +99,7 @@ registroALinea reg = intercalate ","
     , regCarrera reg
     , regEntrada reg
     , case regSalida reg of
-        Nothing -> ""    -- sin salida => campo vacío
+        Nothing -> ""    -- sin salida => campo vacio
         Just t  -> t     -- con salida => la hora
     ]
 
@@ -108,10 +108,10 @@ registroALinea reg = intercalate ","
 -- cargarRegistrosSeguros
 -- ----------------------------------------------------------------
 -- Igual que cargarRegistros, pero si el archivo NO existe
--- simplemente devuelve una lista vacía en vez de crashear.
+-- simplemente devuelve una lista vacia en vez de crashear.
 --
 -- 'catchIOError accion manejador' ejecuta 'accion' y si falla
--- ejecuta 'manejador' con el error. Aquí ignoramos el error (\_ )
+-- ejecuta 'manejador' con el error. Aqui ignoramos el error (\_ )
 -- y devolvemos [].
 cargarRegistrosSeguros :: FilePath -> IO [Registro]
 cargarRegistrosSeguros archivo =
